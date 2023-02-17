@@ -4,27 +4,19 @@
 Self OVMF Package
 
 #### 软件架构
-软件架构说明
+项目来自 edk2/OvmfPkg/OvmfPkgIa32X64.dsc 和 OvmfPkgIa32X64.fdf
 
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  安装 ASL NASM
+2.  复制 SelfOvmfPkg 到工作目录
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+1.  build -a IA32 -a X64 -p SelfOvmfPkg\SelfOvmfIa32X64.dsc # 直接编译
+2.  build -a IA32 -a X64 -p SelfOvmfPkg\SelfOvmfIa32X64.dsc -D DEBUG_ON_SERIAL_PORT # 开启 log 输出
+3.  build -a IA32 -a X64 -p SelfOvmfPkg\SelfOvmfIa32X64.dsc -D DEBUG_ON_SERIAL_PORT -D SMM_REQUIRE=TRUE # 开启 SMM 和 log 输出
 
 
 #### 特技
