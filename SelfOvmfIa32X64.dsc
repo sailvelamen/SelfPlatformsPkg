@@ -736,7 +736,7 @@
   UefiCpuPkg/CpuMpPei/CpuMpPei.inf
 
 !include OvmfPkg/Include/Dsc/OvmfTpmComponentsPei.dsc.inc
-  SelfPkg/Universal/PpiSampleDemo/PpiSampleDemo.inf  # fanjix
+  SelfPkg/Universal/PpiHobDemo/PpiHobDemo.inf  # fanjix
 [Components.X64]
   #
   # DXE Phase modules

@@ -173,7 +173,7 @@ INF  OvmfPkg/SmmAccess/SmmAccessPei.inf
 INF  UefiCpuPkg/CpuMpPei/CpuMpPei.inf
 
 !include OvmfPkg/OvmfTpmPei.fdf.inc
-INF  SelfPkg/Universal/PpiSampleDemo/PpiSampleDemo.inf  # fanjix
+INF  SelfPkg/Universal/PpiHobDemo/PpiHobDemo.inf  # fanjix
 ################################################################################
 
 [FV.DXEFV]
