@@ -172,7 +172,7 @@ INF  OvmfPkg/SmmAccess/SmmAccessPei.inf
 !endif
 INF  UefiCpuPkg/CpuMpPei/CpuMpPei.inf
 
-!include OvmfPkg/OvmfTpmPei.fdf.inc
+!include OvmfPkg/Include/Fdf/OvmfTpmPei.fdf.inc
 INF  SelfPkg/Universal/PpiHobDemo/PpiHobDemo.inf  # fanjix
 ################################################################################
 
@@ -239,6 +239,7 @@ INF  OvmfPkg/Virtio10Dxe/Virtio10.inf
 INF  OvmfPkg/VirtioBlkDxe/VirtioBlk.inf
 INF  OvmfPkg/VirtioScsiDxe/VirtioScsi.inf
 INF  OvmfPkg/VirtioRngDxe/VirtioRng.inf
+INF  OvmfPkg/VirtioSerialDxe/VirtioSerial.inf
 !if $(PVSCSI_ENABLE) == TRUE
 INF  OvmfPkg/PvScsiDxe/PvScsiDxe.inf
 !endif
@@ -295,7 +296,6 @@ INF  MdeModulePkg/Universal/Acpi/S3SaveStateDxe/S3SaveStateDxe.inf
 INF  MdeModulePkg/Universal/Acpi/BootScriptExecutorDxe/BootScriptExecutorDxe.inf
 INF  MdeModulePkg/Universal/Acpi/BootGraphicsResourceTableDxe/BootGraphicsResourceTableDxe.inf
 INF  SelfPkg/Universal/InstallACPI/InstallACPI.inf  # fanjix
-
 INF  FatPkg/EnhancedFatDxe/Fat.inf
 INF  MdeModulePkg/Universal/Disk/UdfDxe/UdfDxe.inf
 INF  OvmfPkg/VirtioFsDxe/VirtioFsDxe.inf
@@ -364,7 +364,6 @@ INF  OvmfPkg/QemuFlashFvbServicesRuntimeDxe/FvbServicesSmm.inf
 INF  MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteSmm.inf
 INF  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableSmm.inf
 INF  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableSmmRuntimeDxe.inf
-
 #
 # Self DXE_SMM_DRIVER
 #
@@ -383,7 +382,7 @@ INF  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf
 #
 # TPM support
 #
-!include OvmfPkg/OvmfTpmDxe.fdf.inc
+!include OvmfPkg/Include/Fdf/OvmfTpmDxe.fdf.inc
 
 ################################################################################
 
