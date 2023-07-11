@@ -262,7 +262,8 @@ INF  MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
 INF  MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
 INF  MdeModulePkg/Universal/Console/TerminalDxe/TerminalDxe.inf
 INF  MdeModulePkg/Universal/DriverHealthManagerDxe/DriverHealthManagerDxe.inf
-INF  SelfPkg/Universal/DriverSampleDxe/DriverSampleDxe.inf
+INF  SelfPkg/Universal/DriverSampleDxe/DriverSampleDxe.inf  # fanjix
+INF  SelfPkg/Universal/BootOptionsDxe/BootOptionsDxe.inf    # fanjix  
 INF  MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
 INF  MdeModulePkg/Application/UiApp/UiApp.inf
 INF  OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.inf
