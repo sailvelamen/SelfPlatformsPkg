@@ -1,1 +1,2 @@
-qemu-system-x86_64 -pflash "Build\SelfOvmf3264\DEBUG_VS2019\FV\OVMF.fd" -hda fat:rw:"Build\dbgOvmfX64\hda-contents" -serial file:"Build\dbgOvmfX64\hda-contents\debug.log" -net none -m 1024 -M q35,smm=on
+CHCP 65001
+qemu-system-x86_64 -pflash "Build\SelfOvmf3264\DEBUG_VS2019\FV\OVMF.fd" -hda fat:rw:"Build\dbgOvmfX64\hda-contents" -serial file:"Build\dbgOvmfX64\hda-contents\debug.log" -net none -m 2048 -M q35,smm=on
