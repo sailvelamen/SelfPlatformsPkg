@@ -1,1 +1,1 @@
-build -a IA32 -a X64 -b DEBUG -p SelfOvmfPkg\SelfOvmfIa32X64.dsc -D DEBUG_ON_SERIAL_PORT -D SMM_REQUIRE=TRUE -y Build\SelfOvmf3264\report.log -j Build\SelfOvmf3264\build.log
+build -a IA32 -a X64 -b DEBUG -p SelfPlatformsPkg\X86\SelfOvmfIa32X64.dsc -D DEBUG_ON_SERIAL_PORT -D SMM_REQUIRE=TRUE -y Build\SelfOvmf3264\report.log -j Build\SelfOvmf3264\build.log
