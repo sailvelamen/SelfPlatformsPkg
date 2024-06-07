@@ -299,6 +299,11 @@ INF  OvmfPkg/VirtioFsDxe/VirtioFsDxe.inf
 INF MdeModulePkg/Logo/LogoDxe.inf
 
 #
+# Hash2 Protocol producer
+#
+INF SecurityPkg/Hash2DxeCrypto/Hash2DxeCrypto.inf
+
+#
 # Network modules
 #
 !if $(E1000_ENABLE)
@@ -325,6 +330,7 @@ INF  OvmfPkg/VirtioGpuDxe/VirtioGpu.inf
 INF  OvmfPkg/PlatformDxe/Platform.inf
 INF  OvmfPkg/AmdSevDxe/AmdSevDxe.inf
 INF  OvmfPkg/IoMmuDxe/IoMmuDxe.inf
+INF  OvmfPkg/VirtHstiDxe/VirtHstiDxe.inf
 
 !if $(SMM_REQUIRE) == TRUE
 INF  OvmfPkg/SmmAccess/SmmAccess2Dxe.inf
@@ -365,6 +371,7 @@ INF  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf
 !include OvmfPkg/Include/Fdf/OvmfTpmDxe.fdf.inc
 
 !include OvmfPkg/Include/Fdf/ShellDxe.fdf.inc
+!include OvmfPkg/Include/Fdf/MorLock.fdf.inc
 
 ################################################################################
 
