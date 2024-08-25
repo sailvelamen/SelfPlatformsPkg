@@ -666,6 +666,7 @@
   gUefiOvmfPkgTokenSpaceGuid.PcdQ35SmramAtDefaultSmbase|FALSE
   gUefiCpuPkgTokenSpaceGuid.PcdCpuSmmSyncMode|0x01
   gUefiCpuPkgTokenSpaceGuid.PcdCpuSmmApSyncTimeout|100000
+  gUefiCpuPkgTokenSpaceGuid.PcdCpuSmmApSyncTimeout2|100000
 !endif
 
   gEfiSecurityPkgTokenSpaceGuid.PcdOptionRomImageVerificationPolicy|0x00
@@ -804,7 +805,6 @@
   OvmfPkg/Virtio10Dxe/Virtio10.inf
   OvmfPkg/VirtioBlkDxe/VirtioBlk.inf
   OvmfPkg/VirtioScsiDxe/VirtioScsi.inf
-  OvmfPkg/VirtioRngDxe/VirtioRng.inf
   OvmfPkg/VirtioSerialDxe/VirtioSerial.inf
 !if $(PVSCSI_ENABLE) == TRUE
   OvmfPkg/PvScsiDxe/PvScsiDxe.inf
@@ -902,6 +902,7 @@
 
 !include OvmfPkg/Include/Dsc/ShellComponents.dsc.inc
 !include OvmfPkg/Include/Dsc/MorLock.dsc.inc
+!include OvmfPkg/Include/Dsc/OvmfRngComponents.dsc.inc
 
 !if $(SECURE_BOOT_ENABLE) == TRUE
   SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf

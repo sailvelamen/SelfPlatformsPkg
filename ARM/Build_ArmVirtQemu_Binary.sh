@@ -1,0 +1,1 @@
+build -n $NUM_CPUS -a AARCH64 -t GCC5 -p edk2/ArmVirtPkg/ArmVirtQemu.dsc -Y COMPILE_INFO -y Build/ArmVirtQemu-AARCH64/report.log -j Build/ArmVirtQemu-AARCH64/build.log

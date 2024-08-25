@@ -1,0 +1,1 @@
+qemu-system-aarch64 -M virt -cpu cortex-a72 -smp 4,cores=2,threads=2,sockets=1 -m 2048 -bios "Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/FV/QEMU_EFI.fd" -hda fat:rw:"Build/dbgQemuEmulator/hda-contents" -net none -serial file:"Build/dbgQemuEmulator/hda-contents/ArmVirtQemu-AARCH64_2G.log" -device virtio-gpu-pci -device nec-usb-xhci -device usb-mouse -device usb-kbd
