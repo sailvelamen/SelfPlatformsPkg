@@ -16,6 +16,24 @@
   VERSION_STRING = 1.0
 
 [Sources]
+## @file
+#
+#  Device tree description of the Hifive Unleashed platform
+#
+#  Copyright (c) 2021, Hewlett Packard Enterprise Development LP. All rights reserved.
+#
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+##
+
+[Defines]
+  INF_VERSION    = 0x0001001A
+  BASE_NAME      = JH7110DeviceTree
+  FILE_GUID      = 25462CDA-221F-47DF-AC1D-259CFAA4E326 # gDtPlatformDefaultDtbFileGuid
+  MODULE_TYPE    = USER_DEFINED
+  VERSION_STRING = 1.0
+
+[Sources]
   # starfive-jh7110-clkgen.h
   # starfive-jh7110-isp.h
   # starfive-jh7110-vout.h
@@ -32,11 +50,11 @@
   # sf_hdmi.dtsi
   # sf_pwmdac.dtsi
   # jh7110-clk.dtsi
-  debian-jh7110-visionfive-v2.dts
-  # ubuntu-visionfive-2-v1.3b.dts
+
+  jh7110-starfive-visionfive-2-v1.3b.dts  # debian
 
 [Packages]
   MdePkg/MdePkg.dec
 
-# [Binaries]
-#   BIN|jh7110-visionfive-v2.dtb|*
+## [Binaries]
+##   BIN|jh7110-visionfive-v2.dtb|*
