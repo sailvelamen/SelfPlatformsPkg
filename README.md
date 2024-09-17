@@ -1,20 +1,49 @@
 # SelfPlatformsPkg
 
 #### 介绍
-Self X86 OVMF Package
-Self RISC-V JH7110 Package
-
-#### 软件架构
-项目来自 edk2/OvmfPkg/OvmfPkgIa32X64.dsc 和 OvmfPkgIa32X64.fdf
-
-
-#### 安装教程
-
-1.  安装 ASL NASM
-2.  复制 SelfPlatformsPkg 到工作目录
+```
+SelfPlatformsPkg
+├── ARM                             # ARM #
+│   ├── Build_ArmVirtQemu_Binary.sh  # 编译Arm平台固件
+│   └── Run_ArmVirtQemu-AARCH64.sh   # Qemu运行Arm固件
+├── RISC-V                          # RISC-v #
+│   ├── Build_JH7110_Binary.sh       # 编译JH7110平台固件 (edk2: https://github.com/starfive-tech/edk2)
+│   ├── Build_U540_Binary.sh         # 编译U540平台固件
+│   ├── JH7110Board                  # 自定义设备树
+│   ├── Library
+│   ├── Run_SiFiveU540_RISC-V.sh     # Qemu运行SiFiveU540
+│   └── Universal
+└── X86                             # X86 #
+    ├── Build_OvmfIa32X64_Binary.sh  # 编译OVMF平台固件
+    ├── Run_OvmfIa32X64_Log.sh       # Qemu运行OVMF固件
+    ├── Run_OvmfIa32X64_Stdio.bat
+    ├── SelfOvmfIa32X64.dsc          # 自定义OVMF
+    └── SelfOvmfIa32X64.fdf
+```
 
 #### 使用说明
+设置环境变量：
+```shell
+WORKAREA=$PWD
+export EDK_TOOLS_PATH=$WORKAREA/edk2/BaseTools
+export CONF_PATH=$WORKAREA/edk2/Conf
+export PACKAGES_PATH=$WORKAREA/edk2:$WORKAREA/edk2-platforms:$WORKAREA/edk2-non-osi:$WORKAREA/edk2-libc:$WORKAREA/SelfPkg:$WORKAREA/SelfPlatformsPkg
+echo ""
+NUM_CPUS=$((`getconf _NPROCESSORS_ONLN` + 2))
+echo "NUM_CPUS            = "$NUM_CPUS
+export GCC5_AARCH64_PREFIX=aarch64-linux-gnu-
+echo "GCC5_AARCH64_PREFIX = "$GCC5_AARCH64_PREFIX
+export GCC5_RISCV64_PREFIX=riscv64-linux-gnu-
+echo "GCC5_RISCV64_PREFIX = "$GCC5_RISCV64_PREFIX
+echo ""
+source edk2/edksetup.sh
+```
 
-1.  build -a IA32 -a X64 -b DEBUG -p SelfPlatformsPkg\X86\SelfOvmfIa32X64.dsc # 直接编译
-2.  build -a IA32 -a X64 -b DEBUG -p SelfPlatformsPkg\X86\SelfOvmfIa32X64.dsc -D DEBUG_ON_SERIAL_PORT # 开启 log 输出
-3.  build -a IA32 -a X64 -b DEBUG -p SelfPlatformsPkg\X86\SelfOvmfIa32X64.dsc -D DEBUG_ON_SERIAL_PORT -D SMM_REQUIRE=TRUE # 开启 SMM 和 log 输出
+编译固件(e.g.):
+```
+source SelfPlatformsPkg/X86/Build_OvmfIa32X64_Binary.sh
+```
+运行固件(e.g.):
+```
+source SelfPlatformsPkg/X86/Run_OvmfIa32X64_Stdio.bat
+```

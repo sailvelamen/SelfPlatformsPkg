@@ -1,1 +1,2 @@
-qemu-system-riscv64 -cpu sifive-u54 -machine sifive_u -bios "Build/FreedomU540HiFiveUnleashed/DEBUG_GCC5/FV/U540.fd" -m 2048 -smp cpus=5,maxcpus=5 -serial file:"Build/dbgQemuEmulator/hda-contents/SiFiveU540_RISC-V_2G.log"
+#qemu-system-riscv64 -cpu sifive-u54 -machine sifive_u -bios "Build/FreedomU540HiFiveUnleashed/DEBUG_GCC5/FV/U540.fd" -m 2048 -smp cpus=5,maxcpus=5 -serial file:"Build/dbgQemuEmulator/hda-contents/SiFiveU540_RISC-V_2G.log"
+qemu-system-riscv64 -cpu sifive-u54 -machine sifive_u -bios "Build/FreedomU540HiFiveUnleashed/DEBUG_GCC5/FV/U540.fd" -m 4096 -smp cpus=5,maxcpus=5 -serial stdio
