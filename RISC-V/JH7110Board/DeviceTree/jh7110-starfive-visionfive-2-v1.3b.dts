@@ -2337,9 +2337,9 @@
 		linux,cma {
 			compatible = "shared-dma-pool";
 			reusable;
-			size = <0x00 0x20000000>;
+			size = <0x00 0x60000000>;
 			alignment = <0x00 0x1000>;
-			alloc-ranges = <0x00 0x80000000 0x00 0x20000000>;
+			alloc-ranges = <0x00 0x80000000 0x00 0x60000000>;
 			linux,cma-default;
 		};
 
