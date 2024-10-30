@@ -1,0 +1,2 @@
+# build -n $NUM_CPUS -a RISCV64 -t GCC5 -p Platform/SiFive/U5SeriesPkg/FreedomU540HiFiveUnleashedBoard/SelfU540.dsc -Y COMPILE_INFO
+build -n $NUM_CPUS -a RISCV64 -t GCC5 -p Platform/SiFive/U5SeriesPkg/FreedomU540HiFiveUnleashedBoard/SelfU540.dsc -Y COMPILE_INFO -y Build/SelfPlatformsPkg/FreedomU540HiFiveUnleashed/report.log -j Build/SelfPlatformsPkg/FreedomU540HiFiveUnleashed/build.log

@@ -1,0 +1,2 @@
+# build -n $NUM_CPUS -a IA32 -a X64 -b DEBUG -p SelfPlatformsPkg/X86_Script/SelfOvmfIa32X64.dsc -D DEBUG_ON_SERIAL_PORT -D SMM_REQUIRE=TRUE -Y COMPILE_INFO
+build -n $NUM_CPUS -a IA32 -a X64 -b DEBUG -p SelfPlatformsPkg/X86_Script/SelfOvmfIa32X64.dsc -D DEBUG_ON_SERIAL_PORT -D SMM_REQUIRE=TRUE -Y COMPILE_INFO -y Build/SelfPlatformsPkg/SelfOvmf3264/report.log -j Build/SelfPlatformsPkg/SelfOvmf3264/build.log

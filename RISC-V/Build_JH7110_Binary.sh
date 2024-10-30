@@ -1,1 +1,0 @@
-build -n $NUM_CPUS -a RISCV64 -t GCC5 -p SelfPlatformsPkg/RISC-V/JH7110Board/SelfJH7110.dsc -y Build/SelfPlatformsPkg/SelfJH7110/report.log -j Build/SelfPlatformsPkg/SelfJH7110/build.log

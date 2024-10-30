@@ -1,0 +1,2 @@
+# build -n $NUM_CPUS -a RISCV64 -t GCC5 -p Platform/Starfive/JH7110SeriesPkg/JH7110Board/SelfJH7110.dsc -Y COMPILE_INFO
+build -n $NUM_CPUS -a RISCV64 -t GCC5 -p Platform/Starfive/JH7110SeriesPkg/JH7110Board/SelfJH7110.dsc -Y COMPILE_INFO -y Build/SelfPlatformsPkg/SelfJH7110/report.log -j Build/SelfPlatformsPkg/SelfJH7110/build.log
