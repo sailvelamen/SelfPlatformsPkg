@@ -31,6 +31,8 @@
   MdeModulePkg/MdeModulePkg.dec
   Platform/RISC-V/PlatformPkg/RiscVPlatformPkg.dec
   Silicon/RISC-V/ProcessorPkg/RiscVProcessorPkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
 
 [LibraryClasses]
   BaseLib
+  FdtLib

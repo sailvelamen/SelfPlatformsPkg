@@ -14,6 +14,7 @@
 #include <Library/RiscVSpecialPlatformLib.h>
 #include <sbi_utils/fdt/fdt_helper.h>
 #include <sbi_utils/fdt/fdt_fixup.h>
+#include <libfdt.h>
 
 static u64 sifive_fu540_tlbr_flush_limit(const struct fdt_match *match)
 {
@@ -31,7 +32,30 @@ static int sifive_fu540_fdt_fixup(void *fdt, const struct fdt_match *match)
    * to access a PMP protected region using 1GB page table mapping, so
    * always add the no-map attribute on this platform.
    */
-  fdt_reserved_memory_nomap_fixup(fdt);
+  // fdt_reserved_memory_nomap_fixup(fdt);
+
+	int parent, subnode;
+	int err;
+	bool nomap = TRUE;
+
+	/* Locate the reserved memory node */
+	parent = fdt_path_offset(fdt, "/reserved-memory");
+	if (parent < 0)
+		return parent;
+
+	fdt_for_each_subnode(subnode, fdt, parent) {
+		/*
+		 * Tell operating system not to create a virtual
+		 * mapping of the region as part of its standard
+		 * mapping of system memory.
+		 */
+		nomap = fdt_getprop(fdt, subnode, "no-map", NULL) != NULL;
+		if (nomap) {
+			err = fdt_setprop_empty(fdt, subnode, "no-map");
+			if (err < 0)
+				return err;
+		}
+	}
 
   return 0;
 }
