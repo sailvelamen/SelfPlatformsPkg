@@ -152,9 +152,10 @@ INF  Platform/SiFive/U5SeriesPkg/Universal/Dxe/RamFvbServicesRuntimeDxe/FvbServi
 
 # RISC-V Core Drivers
 # INF  UefiCpuPkg/CpuTimerDxeRiscV64/CpuTimerDxeRiscV64.inf
-INF  SelfPlatformsPkg/Platform/Starfive/JH7110SeriesPkg/Universal/Dxe/TimerDxe/TimerDxe.inf
-# INF  UefiCpuPkg/CpuDxeRiscV64/CpuDxeRiscV64.inf
-INF  SelfPlatformsPkg/Silicon/RISC-V/ProcessorPkg/Universal/CpuDxe/CpuDxe.inf
+INF  SelfPlatformsPkg/UefiCpuPkg/CpuTimerDxeRiscV64/CpuTimerDxeRiscV64.inf
+# INF  SelfPlatformsPkg/Platform/Starfive/JH7110SeriesPkg/Universal/Dxe/TimerDxe/TimerDxe.inf
+INF  SelfPlatformsPkg/UefiCpuPkg/CpuDxeRiscV64/CpuDxeRiscV64.inf
+# INF  SelfPlatformsPkg/Silicon/RISC-V/ProcessorPkg/Universal/CpuDxe/CpuDxe.inf
 INF  Silicon/RISC-V/ProcessorPkg/Universal/SmbiosDxe/RiscVSmbiosDxe.inf
 
 INF  MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteDxe.inf

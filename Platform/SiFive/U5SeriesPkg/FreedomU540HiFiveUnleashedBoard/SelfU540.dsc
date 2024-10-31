@@ -469,14 +469,16 @@
   # RISC-V Platform module
   #
   # UefiCpuPkg/CpuTimerDxeRiscV64/CpuTimerDxeRiscV64.inf
-  SelfPlatformsPkg/Platform/Starfive/JH7110SeriesPkg/Universal/Dxe/TimerDxe/TimerDxe.inf
+  SelfPlatformsPkg/UefiCpuPkg/CpuTimerDxeRiscV64/CpuTimerDxeRiscV64.inf
+  # SelfPlatformsPkg/Platform/Starfive/JH7110SeriesPkg/Universal/Dxe/TimerDxe/TimerDxe.inf
   Platform/SiFive/U5SeriesPkg/Universal/Dxe/RamFvbServicesRuntimeDxe/FvbServicesRuntimeDxe.inf
 
   #
   # RISC-V Core module
   #
   # UefiCpuPkg/CpuDxeRiscV64/CpuDxeRiscV64.inf
-  SelfPlatformsPkg/Silicon/RISC-V/ProcessorPkg/Universal/CpuDxe/CpuDxe.inf
+  SelfPlatformsPkg/UefiCpuPkg/CpuDxeRiscV64/CpuDxeRiscV64.inf
+  # SelfPlatformsPkg/Silicon/RISC-V/ProcessorPkg/Universal/CpuDxe/CpuDxe.inf
   Silicon/RISC-V/ProcessorPkg/Universal/SmbiosDxe/RiscVSmbiosDxe.inf
   MdeModulePkg/Universal/ResetSystemRuntimeDxe/ResetSystemRuntimeDxe.inf
 
