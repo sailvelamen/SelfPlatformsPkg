@@ -1,1 +1,0 @@
-qemu-system-x86_64 -pflash "Build/SelfPlatformsPkg/SelfOvmf3264/DEBUG_GCC5/FV/OVMF.fd" -hda fat:rw:"Build/dbgQemuEmulator/hda-contents" -serial mon:stdio -net none -m 2048 -M q35,smm=on

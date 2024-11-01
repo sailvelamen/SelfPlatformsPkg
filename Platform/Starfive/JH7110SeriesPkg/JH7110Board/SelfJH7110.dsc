@@ -104,6 +104,8 @@
   VariablePolicyHelperLib|MdeModulePkg/Library/VariablePolicyHelperLib/VariablePolicyHelperLib.inf
   NorFlashInfoLib|EmbeddedPkg/Library/NorFlashInfoLib/NorFlashInfoLib.inf
   ImagePropertiesRecordLib|MdeModulePkg/Library/ImagePropertiesRecordLib/ImagePropertiesRecordLib.inf
+  FileExplorerLib|MdeModulePkg/Library/FileExplorerLib/FileExplorerLib.inf
+
 # RISC-V Platform Library
   TimeBaseLib|EmbeddedPkg//Library/TimeBaseLib/TimeBaseLib.inf
   RealTimeClockLib|EmbeddedPkg//Library/VirtualRealTimeClockLib/VirtualRealTimeClockLib.inf
@@ -157,10 +159,10 @@
   RiscVSbiLib|MdePkg/Library/BaseRiscVSbiLib/BaseRiscVSbiLib.inf
   RiscVEdk2SbiLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVEdk2SbiLib/RiscVEdk2SbiLib.inf
   TimerLib|UefiCpuPkg/Library/BaseRiscV64CpuTimerLib/BaseRiscV64CpuTimerLib.inf
-  RiscVPlatformTimerLib|SelfPlatformsPkg/Platform/Starfive/JH7110SeriesPkg/Library/RiscVPlatformTimerLib/RiscVPlatformTimerLib.inf
-  #MachineModeTimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVReadMachineModeTimer/MachineModeTimerLib/MachineModeTimerLib.inf
-  MachineModeTimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVReadMachineModeTimer/EmulatedMachineModeTimerLib/EmulatedMachineModeTimerLib.inf
-  CpuExceptionHandlerLib|SelfPlatformsPkg/Silicon/StarFive/JH7110/Library/RiscVExceptionLib/CpuExceptionHandlerDxeLib.inf
+  # RiscVPlatformTimerLib|SelfPlatformsPkg/Platform/Starfive/JH7110SeriesPkg/Library/RiscVPlatformTimerLib/RiscVPlatformTimerLib.inf
+  # #MachineModeTimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVReadMachineModeTimer/MachineModeTimerLib/MachineModeTimerLib.inf
+  # MachineModeTimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVReadMachineModeTimer/EmulatedMachineModeTimerLib/EmulatedMachineModeTimerLib.inf
+  CpuExceptionHandlerLib|SelfPlatformsPkg/Silicon/RISC-V/ProcessorPkg/Library/RiscVExceptionLib/CpuExceptionHandlerDxeLib.inf
   #Pci dependencies 
   PciHostBridgeLib|SelfPlatformsPkg/Silicon/StarFive/JH7110/Library/PciHostBridgeLib/PciHostBridgeLib.inf
   PciSegmentLib|SelfPlatformsPkg/Silicon/StarFive/JH7110/Library/PciSegmentLib/PciSegmentLib.inf
@@ -502,14 +504,15 @@
   #
   # RISC-V Platform module
   #
-  SelfPlatformsPkg/Platform/Starfive/JH7110SeriesPkg/Universal/Dxe/TimerDxe/TimerDxe.inf
-  #SelfPlatformsPkg/RISC-V/Platform/Starfive/JH7110SeriesPkg/Universal/Dxe/RamFvbServicesRuntimeDxe/FvbServicesRuntimeDxe.inf
+  # SelfPlatformsPkg/Platform/Starfive/JH7110SeriesPkg/Universal/Dxe/TimerDxe/TimerDxe.inf
+  SelfPlatformsPkg/UefiCpuPkg/CpuTimerDxeRiscV64/CpuTimerDxeRiscV64.inf
+  SelfPlatformsPkg/Platform/Starfive/JH7110SeriesPkg/Universal/Dxe/RamFvbServicesRuntimeDxe/FvbServicesRuntimeDxe.inf
 
   #
   # RISC-V Core module
   #
-  # UefiCpuPkg/CpuDxeRiscV64/CpuDxeRiscV64.inf
-  SelfPlatformsPkg/Silicon/RISC-V/ProcessorPkg/Universal/CpuDxe/CpuDxe.inf
+  # SelfPlatformsPkg/Silicon/RISC-V/ProcessorPkg/Universal/CpuDxe/CpuDxe.inf
+  SelfPlatformsPkg/UefiCpuPkg/CpuDxeRiscV64/CpuDxeRiscV64.inf
   Silicon/RISC-V/ProcessorPkg/Universal/SmbiosDxe/RiscVSmbiosDxe.inf
   MdeModulePkg/Universal/ResetSystemRuntimeDxe/ResetSystemRuntimeDxe.inf
 
@@ -647,7 +650,12 @@
   SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
 !endif
 
-  MdeModulePkg/Application/UiApp/UiApp.inf
+  MdeModulePkg/Application/UiApp/UiApp.inf {
+    <LibraryClasses>
+      NULL|MdeModulePkg/Library/DeviceManagerUiLib/DeviceManagerUiLib.inf
+      NULL|MdeModulePkg/Library/BootManagerUiLib/BootManagerUiLib.inf
+      NULL|MdeModulePkg/Library/BootMaintenanceManagerUiLib/BootMaintenanceManagerUiLib.inf
+  }
 
   SelfPkg/Applications/UpdateSpiFlash/UpdateSpiFlash.inf {
     <LibraryClasses>
