@@ -74,14 +74,14 @@ RiscVProgramTimer (
   Check whether Sstc is enabled in PCD.
 
 **/
-// STATIC
-// BOOLEAN
-// RiscVIsSstcEnabled (
-//   VOID
-//   )
-// {
-//   return ((PcdGet64 (PcdRiscVFeatureOverride) & RISCV_CPU_FEATURE_SSTC_BITMASK) != 0);
-// }
+STATIC
+BOOLEAN
+RiscVIsSstcEnabled (
+  VOID
+  )
+{
+  return ((PcdGet64 (PcdRiscVFeatureOverride) & RISCV_CPU_FEATURE_SSTC_BITMASK) != 0);
+}
 
 /**
   Timer Interrupt Handler.
@@ -320,10 +320,10 @@ TimerDriverInitialize (
   //
   mTimerNotifyFunction = NULL;
 
-  // if (RiscVIsSstcEnabled ()) {
-  //   mSstcEnabled = TRUE;
-  //   DEBUG ((DEBUG_INFO, "TimerDriverInitialize: Timer interrupt is via Sstc extension\n"));
-  // }
+  if (RiscVIsSstcEnabled ()) {
+    mSstcEnabled = TRUE;
+    DEBUG ((DEBUG_INFO, "TimerDriverInitialize: Timer interrupt is via Sstc extension\n"));
+  }
 
   //
   // Make sure the Timer Architectural Protocol is not already installed in the system
@@ -347,7 +347,7 @@ TimerDriverInitialize (
   //
   Status = mCpu->RegisterInterruptHandler (
                    mCpu,
-                   1,
+                   EXCEPT_RISCV_TIMER_INT,
                    TimerInterruptHandler
                    );
   ASSERT_EFI_ERROR (Status);

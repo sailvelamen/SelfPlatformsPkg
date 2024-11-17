@@ -348,7 +348,6 @@ DwEmmcSendCommand (
   UINT32       Cmd = 0;
   EFI_STATUS   Status = EFI_SUCCESS;
 
-
   switch (MMC_GET_INDX(MmcCmd)) {
   case MMC_INDX(0):
     Cmd = BIT_CMD_SEND_INIT;
