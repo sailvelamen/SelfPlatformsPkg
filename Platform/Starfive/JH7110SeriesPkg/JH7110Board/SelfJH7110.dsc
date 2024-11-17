@@ -579,7 +579,7 @@
    #
    # PCIe support
    #
-   MdeModulePkg/Bus/Pci/PciBusDxe/PciBusDxe.inf {
+   SelfPlatformsPkg/MdeMoudulePkg/Bus/Pci/PciBusDxe/PciBusDxe.inf {
     <LibraryClasses>
       PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
   }

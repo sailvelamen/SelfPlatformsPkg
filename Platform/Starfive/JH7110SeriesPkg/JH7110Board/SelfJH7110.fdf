@@ -218,7 +218,7 @@ INF  SelfPlatformsPkg/Silicon/Synopsys/DesignWare/Drivers/DwEmmcDxe/DwSdmmcDxe.i
 #
 # PCIe support
 #
-INF  MdeModulePkg/Bus/Pci/PciBusDxe/PciBusDxe.inf
+INF  SelfPlatformsPkg/MdeMoudulePkg/Bus/Pci/PciBusDxe/PciBusDxe.inf
 INF  MdeModulePkg/Bus/Pci/PciHostBridgeDxe/PciHostBridgeDxe.inf
 
 # NVMe boot devices

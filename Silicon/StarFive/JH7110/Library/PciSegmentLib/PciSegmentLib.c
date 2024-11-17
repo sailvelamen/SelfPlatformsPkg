@@ -80,7 +80,11 @@ PciSegmentLibGetConfigBase (
   UINT32        Dev;
   UINT32        Bus;
 
-  Base = PCIE_CONFIG_BASE;
+  if ((Address >> 32) == 0) {
+    Base = PCIE_CONFIG_BASE - 0x80000000;
+  } else {
+    Base = PCIE_CONFIG_BASE;
+  }
   Offset = Address & 0xFFF;         /* Pick off the 4k register offset */
   Address &= 0xFFFF000;            /* Clear the offset leave only the BDF */
 
