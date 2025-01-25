@@ -60,7 +60,8 @@ AddressWidthInitialization (
 
 EFI_STATUS
 PublishPeiMemory (
-  VOID
+  EFI_PHYSICAL_ADDRESS  *MemoryBase,
+  UINT64                *MemorySize
   );
 
 UINT32
@@ -70,7 +71,8 @@ GetSystemMemorySizeBelow4gb (
 
 VOID
 InitializeRamRegions (
-  VOID
+  EFI_PHYSICAL_ADDRESS  *MemoryBase,
+  UINT64                *MemorySize
   );
 
 EFI_STATUS

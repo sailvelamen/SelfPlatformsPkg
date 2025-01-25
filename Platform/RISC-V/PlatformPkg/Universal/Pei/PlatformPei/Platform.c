@@ -339,14 +339,16 @@ InitializePlatform (
   )
 {
   EFI_STATUS  Status;
+  EFI_PHYSICAL_ADDRESS  MemoryBase;
+  UINT64                MemorySize;
 
   DEBUG ((DEBUG_INFO, "Platform PEIM Loaded\n"));
 
   BootModeInitialization ();
   DEBUG ((DEBUG_INFO, "Platform BOOT mode initiated.\n"));
-  PublishPeiMemory ();
+  PublishPeiMemory (&MemoryBase, &MemorySize);
   DEBUG ((DEBUG_INFO, "PEI memory published.\n"));
-  InitializeRamRegions ();
+  InitializeRamRegions (&MemoryBase, &MemorySize);
   DEBUG ((DEBUG_INFO, "Platform RAM regions initiated.\n"));
 
   if (mBootMode != BOOT_ON_S3_RESUME) {

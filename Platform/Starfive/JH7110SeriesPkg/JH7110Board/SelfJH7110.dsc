@@ -403,7 +403,8 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize|0x00010000
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingSize|0x00010000
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareSize|0x00010000
-
+  gJH7110TokenSpaceGuid.PcdSmbusI2cBusNumber|0x01
+  gJH7110TokenSpaceGuid.PcdSmbusI2cBusSpeed|100000
 
 ################################################################################
 #
@@ -461,6 +462,7 @@
   SelfPlatformsPkg/Platform/RISC-V/PlatformPkg/Universal/Pei/PlatformPei/PlatformPei.inf {
     <LibraryClasses>
       PcdLib|MdePkg/Library/PeiPcdLib/PeiPcdLib.inf
+      I2cLib|SelfPlatformsPkg/Silicon/Synopsys/DesignWare/Drivers/DwI2cLib/DwI2cLib.inf
   }
   Platform/RISC-V/PlatformPkg/Universal/FdtPeim/FdtPeim.inf
 

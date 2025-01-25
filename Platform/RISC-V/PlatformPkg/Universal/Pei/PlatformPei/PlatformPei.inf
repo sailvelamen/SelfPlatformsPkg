@@ -34,6 +34,7 @@
   MdePkg/MdePkg.dec
   Platform/RISC-V/PlatformPkg/RiscVPlatformPkg.dec
   Silicon/RISC-V/ProcessorPkg/RiscVProcessorPkg.dec
+  SelfPlatformsPkg/Silicon/StarFive/JH7110/JH7110.dec
 
 [Guids]
   gEfiMemoryTypeInformationGuid
@@ -46,6 +47,7 @@
   PeimEntryPoint
   PeiResourcePublicationLib
   RiscVCoreplexInfoLib
+  I2cLib
 
 [Pcd]
   gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvStoreReserved
@@ -58,6 +60,9 @@
   gUefiRiscVPlatformPkgTokenSpaceGuid.PcdRiscVDxeFvSize
   gUefiRiscVPlatformPkgTokenSpaceGuid.PcdTemporaryRamBase
   gUefiRiscVPlatformPkgTokenSpaceGuid.PcdTemporaryRamSize
+  gJH7110TokenSpaceGuid.PcdSmbusI2cBusNumber
+  gJH7110TokenSpaceGuid.PcdSmbusI2cBusSpeed
+  gJH7110TokenSpaceGuid.PcdI2cEepromAddress
 
 [Ppis]
   gEfiPeiMasterBootModePpiGuid
