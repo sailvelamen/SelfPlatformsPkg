@@ -238,7 +238,18 @@ PciSearchDevice (
 
   PciIoDevice     = NULL;
   IgnoreOptionRom = FALSE;
-  DEBUG ((DEBUG_INFO, "ECAM = 0x%llx\n", PCI_SEGMENT_LIB_ADDRESS(Bridge->PciRootBridgeIo->SegmentNumber, Bus, Device, Func, 0)));
+  DEBUG ((
+    DEBUG_INFO,
+    "ECAM = 0x%llx\n",
+    PCI_SEGMENT_LIB_ADDRESS (
+                      Bridge->PciRootBridgeIo->SegmentNumber,
+                      Bus,
+                      Device,
+                      Func,
+                      0
+                      )
+    ));
+
   DEBUG ((
     DEBUG_INFO,
     "PciBus: Discovered %s @ [%04x:%02x|%02x|%02x]  [VID = 0x%x, DID = 0x%0x]\n",
