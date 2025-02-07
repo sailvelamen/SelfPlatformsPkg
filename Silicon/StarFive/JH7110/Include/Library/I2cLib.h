@@ -13,11 +13,6 @@
 #include <Uefi/UefiBaseType.h>
 
 //
-// The maximum number of I2C bus
-//
-#define I2C_MAX_BUS_NUM  2
-
-//
 // Private I2C bus data
 //
 typedef struct {

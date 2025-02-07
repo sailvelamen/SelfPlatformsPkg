@@ -12,16 +12,21 @@
 #include <Library/DebugLib.h>
 // #include <Library/DxeServicesTableLib.h>
 // #include <Library/HobLib.h>
-#include <Library/I2cLib.h>
 #include <Library/IoLib.h>
 #include <Library/TimerLib.h>
 // #include <Library/UefiBootServicesTableLib.h>
 // #include <Library/UefiRuntimeLib.h>
-
+#ifndef DW_I2C_LIB_H_
+#define DW_I2C_LIB_H_
+//
+// The maximum number of I2C bus
+//
+#define I2C_MAX_BUS_NUM  2
+#endif /* DW_I2C_LIB_H_ */
 //
 // The base address of DW I2C
 //
-#define I2C_BASE_ADDRESS_LIST  0x10050000, 0x12050000
+// #define I2C_BASE_ADDRESS_LIST  0x10050000, 0x12050000
 
 //
 // Timeout interval
@@ -91,20 +96,22 @@
 #define I2C_STOPDET_TO		(1000/500)
 #define I2C_BYTE_TO_BB		(I2C_BYTE_TO * 16)
 
-// //
-// // Private I2C bus data
-// //
-// typedef struct {
-//   UINTN      Base;
-//   UINT32     BusSpeed;
-//   UINT32     RxFifo;
-//   UINT32     TxFifo;
-//   UINT32     PollingTime;
-//   UINT32     Enabled;
-//   BOOLEAN    IsSmbus;
-//   BOOLEAN    PecCheck;
-// } DW_I2C_CONTEXT_T;
-
+#ifndef I2C_LIB_H_
+#define I2C_LIB_H_
+//
+// Private I2C bus data
+//
+typedef struct {
+  UINTN      Base;
+  UINT32     BusSpeed;
+  UINT32     RxFifo;
+  UINT32     TxFifo;
+  UINT32     PollingTime;
+  UINT32     Enabled;
+  BOOLEAN    IsSmbus;
+  BOOLEAN    PecCheck;
+} DW_I2C_CONTEXT_T;
+#endif  /* I2C_LIB_H_ */
 
 //
 // I2C SCL counter macros
@@ -126,7 +133,7 @@ STATIC UINT32   I2cSclParam[][3] = {
   [I2cSpeedModeFast]     = { 10, 52,  89 },   // FS (Fast Speed)
 };
 
-STATIC UINTN             mI2cBaseArray[I2C_MAX_BUS_NUM] = {I2C_BASE_ADDRESS_LIST};
+// STATIC UINTN             mI2cBaseArray[I2C_MAX_BUS_NUM] = {I2C_BASE_ADDRESS_LIST};
 STATIC UINTN             mI2cClock                      = 49500000U;
 
 UINT64
@@ -150,7 +157,7 @@ I2cHWInit (
 {
   UINT32  Param;
   DEBUG ((DEBUG_ERROR, "%a:%d  \n", __FUNCTION__, __LINE__));
-  mI2cBusList[Bus].Base = mI2cBaseArray[Bus];
+  // mI2cBusList[Bus].Base = mI2cBaseArray[Bus];
 
   Param = MmioRead32 (mI2cBusList[Bus].Base + DW_IC_COMP_PARAM_1);
 
@@ -332,6 +339,9 @@ I2cProbe (
 
   mI2cBusList[Bus].IsSmbus  = IsSmbus;
   mI2cBusList[Bus].PecCheck = PecCheck;
+
+  if (0 == mI2cBusList[Bus].Base)
+    return EFI_INVALID_PARAMETER;
 
   return I2cInit (Bus, BusSpeed, mI2cBusList);
 }
