@@ -176,8 +176,8 @@
 
   ReportStatusCodeLib|MdeModulePkg/Library/PeiReportStatusCodeLib/PeiReportStatusCodeLib.inf
   ExtractGuidedSectionLib|MdePkg/Library/BaseExtractGuidedSectionLib/BaseExtractGuidedSectionLib.inf
-  Edk2OpensbiPlatformWrapperLib|Platform/RISC-V/PlatformPkg/Library/Edk2OpensbiPlatformWrapperLib/Edk2OpensbiPlatformWrapperLib.inf
-  RiscVSpecialPlatformLib|Platform/SiFive/U5SeriesPkg/FreedomU540HiFiveUnleashedBoard/Library/RiscVSpecialPlatformLib/RiscVSpecialPlatformLib.inf
+  Edk2OpensbiPlatformWrapperLib|SelfPlatformsPkg/Platform/RISC-V/PlatformPkg/Library/Edk2OpensbiPlatformWrapperLib/Edk2OpensbiPlatformWrapperLib.inf
+  RiscVSpecialPlatformLib|SelfPlatformsPkg/Platform/SiFive/U5SeriesPkg/FreedomU540HiFiveUnleashedBoard/Library/RiscVSpecialPlatformLib/RiscVSpecialPlatformLib.inf
 
 !ifdef $(SOURCE_DEBUG_ENABLE)
   DebugAgentLib|SourceLevelDebugPkg/Library/DebugAgent/SecPeiDebugAgentLib.inf
@@ -188,7 +188,7 @@
 #
 # OpenSBi Platform Library
 #
-  RiscVOpensbiPlatformLib|Platform/RISC-V/PlatformPkg/Library/OpensbiPlatformLib/OpensbiPlatformLib.inf
+  RiscVOpensbiPlatformLib|SelfPlatformsPkg/Platform/RISC-V/PlatformPkg/Library/OpensbiPlatformLib/OpensbiPlatformLib.inf
 
   # RISCV platforms have SEC modules with standard entry points, so we can generically link StackCheckLib
   NULL|MdePkg/Library/StackCheckLibNull/StackCheckLibNull.inf
@@ -404,7 +404,7 @@
   #
   # SEC Phase modules
   #
-  Platform/RISC-V/PlatformPkg/Universal/Sec/SecMain.inf
+  SelfPlatformsPkg/Platform/RISC-V/PlatformPkg/Universal/Sec/SecMain.inf
 
   #
   # PEI Phase modules

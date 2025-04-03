@@ -180,7 +180,7 @@
 
   ReportStatusCodeLib|MdeModulePkg/Library/PeiReportStatusCodeLib/PeiReportStatusCodeLib.inf
   ExtractGuidedSectionLib|MdePkg/Library/BaseExtractGuidedSectionLib/BaseExtractGuidedSectionLib.inf
-  Edk2OpensbiPlatformWrapperLib|Platform/RISC-V/PlatformPkg/Library/Edk2OpensbiPlatformWrapperLib/Edk2OpensbiPlatformWrapperLib.inf
+  Edk2OpensbiPlatformWrapperLib|SelfPlatformsPkg/Platform/RISC-V/PlatformPkg/Library/Edk2OpensbiPlatformWrapperLib/Edk2OpensbiPlatformWrapperLib.inf
   RiscVSpecialPlatformLib|SelfPlatformsPkg/Platform/Starfive/JH7110SeriesPkg/JH7110Board/Library/RiscVSpecialPlatformLib/RiscVSpecialPlatformLib.inf
 
 !ifdef $(SOURCE_DEBUG_ENABLE)
@@ -192,7 +192,7 @@
 #
 # OpenSBi Platform Library
 #
-  RiscVOpensbiPlatformLib|Platform/RISC-V/PlatformPkg/Library/OpensbiPlatformLib/OpensbiPlatformLib.inf
+  RiscVOpensbiPlatformLib|SelfPlatformsPkg/Platform/RISC-V/PlatformPkg/Library/OpensbiPlatformLib/OpensbiPlatformLib.inf
 
 [LibraryClasses.common.PEI_CORE]
   HobLib|MdePkg/Library/PeiHobLib/PeiHobLib.inf
@@ -443,7 +443,7 @@
   #
   # SEC Phase modules
   #
-  Platform/RISC-V/PlatformPkg/Universal/Sec/SecMain.inf
+  SelfPlatformsPkg/Platform/RISC-V/PlatformPkg/Universal/Sec/SecMain.inf
 
   #
   # PEI Phase modules

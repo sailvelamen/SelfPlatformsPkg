@@ -62,7 +62,7 @@ READ_LOCK_STATUS   = TRUE
 # The code in this FV handles the initial firmware startup, and
 # decompresses the PEI and DXE FVs which handles the rest of the boot sequence.
 #
-INF Platform/RISC-V/PlatformPkg/Universal/Sec/SecMain.inf
+INF SelfPlatformsPkg/Platform/RISC-V/PlatformPkg/Universal/Sec/SecMain.inf
 
 ################################################################################
 [FV.PEIFV]
