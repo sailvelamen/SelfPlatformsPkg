@@ -27,7 +27,7 @@ DEFINE VARS_BLOCKS       = 0x20
 # The base address must be round up to log2.
 #
 DEFINE SECFV_OFFSET        = 0x00000000
-DEFINE SECFV_SIZE          = 0x00040000
+DEFINE SECFV_SIZE          = 0x00080000
 DEFINE ROOT_FW_DOMAIN_SIZE = $(SECFV_SIZE)
 
 #

@@ -1,0 +1,336 @@
+diff --git a/include/sbi/sbi_ecall.h b/include/sbi/sbi_ecall.h
+index 90f33ba..fd43716 100644
+--- a/include/sbi/sbi_ecall.h
++++ b/include/sbi/sbi_ecall.h
+@@ -67,6 +67,19 @@ struct sbi_ecall_extension {
+ 		       struct sbi_trap_info *out_trap);
+ };
+ 
++extern struct sbi_ecall_extension ecall_base;
++extern struct sbi_ecall_extension ecall_legacy;
++extern struct sbi_ecall_extension ecall_time;
++extern struct sbi_ecall_extension ecall_rfence;
++extern struct sbi_ecall_extension ecall_ipi;
++extern struct sbi_ecall_extension ecall_vendor;
++extern struct sbi_ecall_extension ecall_hsm;
++extern struct sbi_ecall_extension ecall_srst;
++extern struct sbi_ecall_extension ecall_pmu;
++extern struct sbi_ecall_extension ecall_dbcn;
++extern struct sbi_ecall_extension ecall_susp;
++extern struct sbi_ecall_extension ecall_cppc;
++
+ u16 sbi_ecall_version_major(void);
+ 
+ u16 sbi_ecall_version_minor(void);
+diff --git a/include/sbi/sbi_types.h b/include/sbi/sbi_types.h
+index def88bb..7a997f0 100644
+--- a/include/sbi/sbi_types.h
++++ b/include/sbi/sbi_types.h
+@@ -10,6 +10,16 @@
+ #ifndef __SBI_TYPES_H__
+ #define __SBI_TYPES_H__
+ 
++#define CONFIG_FDT_DOMAIN
++#define CONFIG_FDT_PMU
++#define CONFIG_FDT_IPI
++#define CONFIG_FDT_IRQCHIP
++#define CONFIG_IRQCHIP_IMSIC
++#define CONFIG_FDT_RESET
++#define CONFIG_FDT_SERIAL
++#define CONFIG_SERIAL_SEMIHOSTING
++#define CONFIG_FDT_TIMER
++
+ #ifndef OPENSBI_EXTERNAL_SBI_TYPES
+ 
+ /* clang-format off */
+diff --git a/include/sbi_utils/serial/semihosting.h b/include/sbi_utils/serial/semihosting.h
+index 8cc4a86..5297cb0 100644
+--- a/include/sbi_utils/serial/semihosting.h
++++ b/include/sbi_utils/serial/semihosting.h
+@@ -38,7 +38,7 @@ enum semihosting_open_mode {
+ 
+ #ifdef CONFIG_SERIAL_SEMIHOSTING
+ int semihosting_init(void);
+-int semihosting_enabled(void);
++bool semihosting_enabled(void);
+ #else
+ static inline int semihosting_init(void) { return SBI_ENODEV; }
+ static inline int semihosting_enabled(void) { return 0; }
+diff --git a/lib/sbi/sbi_ecall.c b/lib/sbi/sbi_ecall.c
+index 3eb4f0a..f372ab9 100644
+--- a/lib/sbi/sbi_ecall.c
++++ b/lib/sbi/sbi_ecall.c
+@@ -13,8 +13,21 @@
+ #include <sbi/sbi_error.h>
+ #include <sbi/sbi_trap.h>
+ 
+-extern struct sbi_ecall_extension *sbi_ecall_exts[];
+-extern unsigned long sbi_ecall_exts_size;
++struct sbi_ecall_extension *sbi_ecall_exts[] = {
++	&ecall_base,
++	&ecall_legacy,
++	&ecall_time,
++	&ecall_rfence,
++	&ecall_ipi,
++	&ecall_vendor,
++	&ecall_hsm,
++	&ecall_srst,
++	&ecall_pmu,
++	&ecall_dbcn,
++	&ecall_susp,
++	&ecall_cppc,
++};
++unsigned long sbi_ecall_exts_size = array_size(sbi_ecall_exts);
+ 
+ u16 sbi_ecall_version_major(void)
+ {
+diff --git a/lib/utils/fdt/fdt_fixup.c b/lib/utils/fdt/fdt_fixup.c
+index ae6be00..6754a8d 100644
+--- a/lib/utils/fdt/fdt_fixup.c
++++ b/lib/utils/fdt/fdt_fixup.c
+@@ -20,6 +20,38 @@
+ #include <sbi_utils/fdt/fdt_pmu.h>
+ #include <sbi_utils/fdt/fdt_helper.h>
+ 
++#ifndef LIBFDT_H
++#define LIBFDT_H
++
++int fdt_find_max_phandle(const void *fdt, uint32_t *phandle)
++{
++	uint32_t max = 0;
++	int offset = -1;
++
++	while (true) {
++		uint32_t value;
++
++		offset = fdt_next_node(fdt, offset, NULL);
++		if (offset < 0) {
++			if (offset == -FDT_ERR_NOTFOUND)
++				break;
++
++			return offset;
++		}
++
++		value = fdt_get_phandle(fdt, offset);
++
++		if (value > max)
++			max = value;
++	}
++
++	if (phandle)
++		*phandle = max;
++
++	return 0;
++}
++#endif /* LIBFDT_H */
++
+ int fdt_add_cpu_idle_states(void *fdt, const struct sbi_cpu_idle_state *state)
+ {
+ 	int cpu_node, cpus_node, err, idle_states_node;
+@@ -287,8 +319,8 @@ int fdt_reserved_memory_fixup(void *fdt)
+ 	struct sbi_domain_memregion *reg;
+ 	struct sbi_domain *dom = sbi_domain_thishart_ptr();
+ 	struct sbi_scratch *scratch = sbi_scratch_thishart_ptr();
+-	unsigned long filtered_base[PMP_COUNT] = { 0 };
+-	unsigned char filtered_order[PMP_COUNT] = { 0 };
++	unsigned long filtered_base[PMP_COUNT];
++	unsigned char filtered_order[PMP_COUNT];
+ 	unsigned long addr, size;
+ 	int err, parent, i, j;
+ 	int na = fdt_address_cells(fdt, 0);
+diff --git a/lib/utils/gpio/fdt_gpio.c b/lib/utils/gpio/fdt_gpio.c
+index 7258128..1f5e7ba 100644
+--- a/lib/utils/gpio/fdt_gpio.c
++++ b/lib/utils/gpio/fdt_gpio.c
+@@ -12,9 +12,15 @@
+ #include <sbi_utils/fdt/fdt_helper.h>
+ #include <sbi_utils/gpio/fdt_gpio.h>
+ 
++extern struct fdt_gpio fdt_gpio_sifive;
++extern struct fdt_gpio fdt_gpio_starfive;
++
+ /* List of FDT gpio drivers generated at compile time */
+-extern struct fdt_gpio *fdt_gpio_drivers[];
+-extern unsigned long fdt_gpio_drivers_size;
++struct fdt_gpio *fdt_gpio_drivers[] = {
++	&fdt_gpio_sifive,
++	&fdt_gpio_starfive,
++};
++unsigned long fdt_gpio_drivers_size = array_size(fdt_gpio_drivers);
+ 
+ static struct fdt_gpio *fdt_gpio_driver(struct gpio_chip *chip)
+ {
+diff --git a/lib/utils/i2c/fdt_i2c.c b/lib/utils/i2c/fdt_i2c.c
+index 6fd35dd..56598ce 100644
+--- a/lib/utils/i2c/fdt_i2c.c
++++ b/lib/utils/i2c/fdt_i2c.c
+@@ -15,10 +15,17 @@
+ #include <sbi/sbi_error.h>
+ #include <sbi_utils/fdt/fdt_helper.h>
+ #include <sbi_utils/i2c/fdt_i2c.h>
++#include <sbi/sbi_console.h>
++
++extern struct fdt_i2c_adapter fdt_i2c_adapter_sifive;
++extern struct fdt_i2c_adapter fdt_i2c_adapter_dw;
+ 
+ /* List of FDT i2c adapter drivers generated at compile time */
+-extern struct fdt_i2c_adapter *fdt_i2c_adapter_drivers[];
+-extern unsigned long fdt_i2c_adapter_drivers_size;
++struct fdt_i2c_adapter *fdt_i2c_adapter_drivers[] = {
++	&fdt_i2c_adapter_sifive,
++	&fdt_i2c_adapter_dw,
++};
++unsigned long fdt_i2c_adapter_drivers_size = array_size(fdt_i2c_adapter_drivers);
+ 
+ static int fdt_i2c_adapter_init(void *fdt, int nodeoff)
+ {
+diff --git a/lib/utils/ipi/fdt_ipi.c b/lib/utils/ipi/fdt_ipi.c
+index 7762aba..858b289 100644
+--- a/lib/utils/ipi/fdt_ipi.c
++++ b/lib/utils/ipi/fdt_ipi.c
+@@ -6,15 +6,21 @@
+  * Authors:
+  *   Anup Patel <anup.patel@wdc.com>
+  */
+-
++#include <sbi/sbi_console.h>
+ #include <sbi/sbi_error.h>
+ #include <sbi/sbi_scratch.h>
+ #include <sbi_utils/fdt/fdt_helper.h>
+ #include <sbi_utils/ipi/fdt_ipi.h>
+ 
++extern struct fdt_ipi fdt_ipi_mswi;
++extern struct fdt_ipi fdt_ipi_plicsw;
++
+ /* List of FDT ipi drivers generated at compile time */
+-extern struct fdt_ipi *fdt_ipi_drivers[];
+-extern unsigned long fdt_ipi_drivers_size;
++struct fdt_ipi *fdt_ipi_drivers[] = {
++	&fdt_ipi_mswi,
++	&fdt_ipi_plicsw,
++};
++unsigned long fdt_ipi_drivers_size = array_size(fdt_ipi_drivers);
+ 
+ static struct fdt_ipi *current_driver = NULL;
+ 
+diff --git a/lib/utils/irqchip/fdt_irqchip.c b/lib/utils/irqchip/fdt_irqchip.c
+index 1b6b674..de57cba 100644
+--- a/lib/utils/irqchip/fdt_irqchip.c
++++ b/lib/utils/irqchip/fdt_irqchip.c
+@@ -12,9 +12,17 @@
+ #include <sbi_utils/fdt/fdt_helper.h>
+ #include <sbi_utils/irqchip/fdt_irqchip.h>
+ 
++extern struct fdt_irqchip fdt_irqchip_aplic;
++extern struct fdt_irqchip fdt_irqchip_imsic;
++extern struct fdt_irqchip fdt_irqchip_plic;
++
+ /* List of FDT irqchip drivers generated at compile time */
+-extern struct fdt_irqchip *fdt_irqchip_drivers[];
+-extern unsigned long fdt_irqchip_drivers_size;
++struct fdt_irqchip *fdt_irqchip_drivers[] = {
++	&fdt_irqchip_aplic,
++	&fdt_irqchip_imsic,
++	&fdt_irqchip_plic
++};
++unsigned long fdt_irqchip_drivers_size = array_size(fdt_irqchip_drivers);
+ 
+ #define FDT_IRQCHIP_MAX_DRIVERS	8
+ 
+diff --git a/lib/utils/reset/fdt_reset.c b/lib/utils/reset/fdt_reset.c
+index 4334586..1efad82 100644
+--- a/lib/utils/reset/fdt_reset.c
++++ b/lib/utils/reset/fdt_reset.c
+@@ -13,9 +13,25 @@
+ #include <sbi_utils/fdt/fdt_helper.h>
+ #include <sbi_utils/reset/fdt_reset.h>
+ 
++extern struct fdt_reset fdt_poweroff_gpio;
++extern struct fdt_reset fdt_reset_gpio;
++extern struct fdt_reset fdt_reset_htif;
++extern struct fdt_reset fdt_reset_sifive_test;
++extern struct fdt_reset fdt_reset_sunxi_wdt;
++extern struct fdt_reset fdt_reset_thead;
++extern struct fdt_reset fdt_reset_atcwdt200;
++
+ /* List of FDT reset drivers generated at compile time */
+-extern struct fdt_reset *fdt_reset_drivers[];
+-extern unsigned long fdt_reset_drivers_size;
++struct fdt_reset *fdt_reset_drivers[] = {
++	&fdt_poweroff_gpio,
++	&fdt_reset_gpio,
++	&fdt_reset_htif,
++	&fdt_reset_sifive_test,
++	&fdt_reset_sunxi_wdt,
++	&fdt_reset_thead,
++	&fdt_reset_atcwdt200,
++};
++unsigned long fdt_reset_drivers_size = array_size(fdt_reset_drivers);
+ 
+ int fdt_reset_driver_init(void *fdt, struct fdt_reset *drv)
+ {
+diff --git a/lib/utils/serial/fdt_serial.c b/lib/utils/serial/fdt_serial.c
+index 0baa722..3497678 100644
+--- a/lib/utils/serial/fdt_serial.c
++++ b/lib/utils/serial/fdt_serial.c
+@@ -13,9 +13,29 @@
+ #include <sbi_utils/fdt/fdt_helper.h>
+ #include <sbi_utils/serial/fdt_serial.h>
+ 
++extern struct fdt_serial fdt_serial_uart8250;
++extern struct fdt_serial fdt_serial_sifive;
++extern struct fdt_serial fdt_serial_litex;
++extern struct fdt_serial fdt_serial_htif;
++extern struct fdt_serial fdt_serial_shakti;
++extern struct fdt_serial fdt_serial_gaisler;
++extern struct fdt_serial fdt_serial_xlnx_uartlite;
++extern struct fdt_serial fdt_serial_cadence;
++extern struct fdt_serial fdt_serial_renesas_scif;
++
+ /* List of FDT serial drivers generated at compile time */
+-extern struct fdt_serial *fdt_serial_drivers[];
+-extern unsigned long fdt_serial_drivers_size;
++struct fdt_serial *fdt_serial_drivers[] = {
++	&fdt_serial_uart8250,
++	&fdt_serial_sifive,
++	&fdt_serial_litex,
++	&fdt_serial_htif,
++	&fdt_serial_shakti,
++	&fdt_serial_gaisler,
++	&fdt_serial_xlnx_uartlite,
++	&fdt_serial_cadence,
++	&fdt_serial_renesas_scif,
++};
++unsigned long fdt_serial_drivers_size = array_size(fdt_serial_drivers);
+ 
+ int fdt_serial_init(void)
+ {
+diff --git a/lib/utils/timer/fdt_timer.c b/lib/utils/timer/fdt_timer.c
+index 62426a7..c04fd83 100644
+--- a/lib/utils/timer/fdt_timer.c
++++ b/lib/utils/timer/fdt_timer.c
+@@ -6,15 +6,21 @@
+  * Authors:
+  *   Anup Patel <anup.patel@wdc.com>
+  */
+-
++#include <sbi/sbi_console.h>
+ #include <sbi/sbi_error.h>
+ #include <sbi/sbi_scratch.h>
+ #include <sbi_utils/fdt/fdt_helper.h>
+ #include <sbi_utils/timer/fdt_timer.h>
+ 
++extern struct fdt_timer fdt_timer_mtimer;
++extern struct fdt_timer fdt_timer_plmt;
++
+ /* List of FDT timer drivers generated at compile time */
+-extern struct fdt_timer *fdt_timer_drivers[];
+-extern unsigned long fdt_timer_drivers_size;
++struct fdt_timer *fdt_timer_drivers[] = {
++	&fdt_timer_mtimer,
++	&fdt_timer_plmt,
++};
++unsigned long fdt_timer_drivers_size = array_size(fdt_timer_drivers);
+ 
+ static struct fdt_timer *current_driver = NULL;
+ 

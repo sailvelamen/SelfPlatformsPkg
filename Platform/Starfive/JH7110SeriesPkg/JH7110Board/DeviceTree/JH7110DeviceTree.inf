@@ -33,7 +33,8 @@
   # sf_pwmdac.dtsi
   # jh7110-clk.dtsi
 
-  jh7110-starfive-visionfive-2-v1.3b.dts  # debian
+  # jh7110-starfive-visionfive-2-v1.3b.dts  # debian
+  deepin-jh7110-starfive-visionfive-2-v1.3b.dts
 
 [Packages]
   MdePkg/MdePkg.dec
