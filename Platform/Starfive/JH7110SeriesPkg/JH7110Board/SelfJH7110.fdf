@@ -93,7 +93,7 @@ APRIORI PEI {
 #
 #  PEI Phase modules
 #
-INF  SelfPlatformsPkg/MdeMoudulePkg/Core/Pei/Pei/PeiMain.inf
+INF  SelfPlatformsPkg/MdeMoudulePkg/Core/Pei/PeiMain.inf
 INF  MdeModulePkg/Universal/PCD/Pei/Pcd.inf
 #INF  MdeModulePkg/Universal/ReportStatusCodeRouter/Pei/ReportStatusCodeRouterPei.inf
 #INF  MdeModulePkg/Universal/StatusCodeHandler/Pei/StatusCodeHandlerPei.inf

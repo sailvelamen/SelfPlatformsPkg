@@ -344,6 +344,13 @@ _start_hang:
   wfi
   j     _start_hang
 
+	/* Map implicit memset() added by compiler to sbi_memset() */
+	.section .text
+	.align 3
+	.globl memset
+memset:
+	tail	sbi_memset
+
   /*
    * Uninitialized hart comes here and wait
    * for the further process.

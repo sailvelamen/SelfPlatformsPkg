@@ -5,7 +5,7 @@
  *  SPDX-License-Identifier: BSD-2-Clause-Patent
  *
  **/
-
+#include <Uefi/UefiBaseType.h>
 #include "SpiApbDxe.h"
 
 VOID
@@ -206,7 +206,7 @@ SpiApbConfigBaudrateDiv (
     Div = SPI_REG_CONFIG_BAUD_MASK;
   }
 
-  DEBUG ((DEBUG_ERROR, "%s: RefClk %dHz sclk %dHz Div 0x%x, actual %dHz\n", __func__,
+  DEBUG ((DEBUG_ERROR, "%a: RefClk %dHz sclk %dHz Div 0x%x, actual %dHz\n", __FUNCTION__,
          RefClkHz, SclkHz, Div, RefClkHz / (2 * (Div + 1))));
 
   Reg |= (Div << SPI_REG_CONFIG_BAUD_LSB);

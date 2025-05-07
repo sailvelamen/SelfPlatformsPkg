@@ -84,60 +84,6 @@ index 3eb4f0a..f372ab9 100644
  
  u16 sbi_ecall_version_major(void)
  {
-diff --git a/lib/utils/fdt/fdt_fixup.c b/lib/utils/fdt/fdt_fixup.c
-index ae6be00..6754a8d 100644
---- a/lib/utils/fdt/fdt_fixup.c
-+++ b/lib/utils/fdt/fdt_fixup.c
-@@ -20,6 +20,38 @@
- #include <sbi_utils/fdt/fdt_pmu.h>
- #include <sbi_utils/fdt/fdt_helper.h>
- 
-+#ifndef LIBFDT_H
-+#define LIBFDT_H
-+
-+int fdt_find_max_phandle(const void *fdt, uint32_t *phandle)
-+{
-+	uint32_t max = 0;
-+	int offset = -1;
-+
-+	while (true) {
-+		uint32_t value;
-+
-+		offset = fdt_next_node(fdt, offset, NULL);
-+		if (offset < 0) {
-+			if (offset == -FDT_ERR_NOTFOUND)
-+				break;
-+
-+			return offset;
-+		}
-+
-+		value = fdt_get_phandle(fdt, offset);
-+
-+		if (value > max)
-+			max = value;
-+	}
-+
-+	if (phandle)
-+		*phandle = max;
-+
-+	return 0;
-+}
-+#endif /* LIBFDT_H */
-+
- int fdt_add_cpu_idle_states(void *fdt, const struct sbi_cpu_idle_state *state)
- {
- 	int cpu_node, cpus_node, err, idle_states_node;
-@@ -287,8 +319,8 @@ int fdt_reserved_memory_fixup(void *fdt)
- 	struct sbi_domain_memregion *reg;
- 	struct sbi_domain *dom = sbi_domain_thishart_ptr();
- 	struct sbi_scratch *scratch = sbi_scratch_thishart_ptr();
--	unsigned long filtered_base[PMP_COUNT] = { 0 };
--	unsigned char filtered_order[PMP_COUNT] = { 0 };
-+	unsigned long filtered_base[PMP_COUNT];
-+	unsigned char filtered_order[PMP_COUNT];
- 	unsigned long addr, size;
- 	int err, parent, i, j;
- 	int na = fdt_address_cells(fdt, 0);
 diff --git a/lib/utils/gpio/fdt_gpio.c b/lib/utils/gpio/fdt_gpio.c
 index 7258128..1f5e7ba 100644
 --- a/lib/utils/gpio/fdt_gpio.c
@@ -161,18 +107,16 @@ index 7258128..1f5e7ba 100644
  static struct fdt_gpio *fdt_gpio_driver(struct gpio_chip *chip)
  {
 diff --git a/lib/utils/i2c/fdt_i2c.c b/lib/utils/i2c/fdt_i2c.c
-index 6fd35dd..56598ce 100644
+index 6fd35dd..6309a15 100644
 --- a/lib/utils/i2c/fdt_i2c.c
 +++ b/lib/utils/i2c/fdt_i2c.c
-@@ -15,10 +15,17 @@
- #include <sbi/sbi_error.h>
+@@ -16,9 +16,15 @@
  #include <sbi_utils/fdt/fdt_helper.h>
  #include <sbi_utils/i2c/fdt_i2c.h>
-+#include <sbi/sbi_console.h>
-+
+ 
 +extern struct fdt_i2c_adapter fdt_i2c_adapter_sifive;
 +extern struct fdt_i2c_adapter fdt_i2c_adapter_dw;
- 
++
  /* List of FDT i2c adapter drivers generated at compile time */
 -extern struct fdt_i2c_adapter *fdt_i2c_adapter_drivers[];
 -extern unsigned long fdt_i2c_adapter_drivers_size;
@@ -185,17 +129,10 @@ index 6fd35dd..56598ce 100644
  static int fdt_i2c_adapter_init(void *fdt, int nodeoff)
  {
 diff --git a/lib/utils/ipi/fdt_ipi.c b/lib/utils/ipi/fdt_ipi.c
-index 7762aba..858b289 100644
+index 7762aba..91d0e63 100644
 --- a/lib/utils/ipi/fdt_ipi.c
 +++ b/lib/utils/ipi/fdt_ipi.c
-@@ -6,15 +6,21 @@
-  * Authors:
-  *   Anup Patel <anup.patel@wdc.com>
-  */
--
-+#include <sbi/sbi_console.h>
- #include <sbi/sbi_error.h>
- #include <sbi/sbi_scratch.h>
+@@ -12,9 +12,15 @@
  #include <sbi_utils/fdt/fdt_helper.h>
  #include <sbi_utils/ipi/fdt_ipi.h>
  
@@ -306,17 +243,10 @@ index 0baa722..3497678 100644
  int fdt_serial_init(void)
  {
 diff --git a/lib/utils/timer/fdt_timer.c b/lib/utils/timer/fdt_timer.c
-index 62426a7..c04fd83 100644
+index 62426a7..8406fd8 100644
 --- a/lib/utils/timer/fdt_timer.c
 +++ b/lib/utils/timer/fdt_timer.c
-@@ -6,15 +6,21 @@
-  * Authors:
-  *   Anup Patel <anup.patel@wdc.com>
-  */
--
-+#include <sbi/sbi_console.h>
- #include <sbi/sbi_error.h>
- #include <sbi/sbi_scratch.h>
+@@ -12,9 +12,15 @@
  #include <sbi_utils/fdt/fdt_helper.h>
  #include <sbi_utils/timer/fdt_timer.h>
  

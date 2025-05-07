@@ -162,7 +162,7 @@
   opensbi/lib/utils/timer/fdt_timer_plmt.c
 
 [Packages]
-  EmbeddedPkg/EmbeddedPkg.dec   # For libfdt.
+  SelfPlatformsPkg/EmbeddedPkg/EmbeddedPkg.dec   # For libfdt.
   MdePkg/MdePkg.dec
   SelfPlatformsPkg/Silicon/RISC-V/ProcessorPkg/RiscVProcessorPkg.dec
 
